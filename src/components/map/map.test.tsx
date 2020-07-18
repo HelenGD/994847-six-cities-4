@@ -9,6 +9,7 @@ it(`Should render Map correctly`, () => {
   const tree = renderer
     .create((
       <Map
+        hoverOffer={null}
         currentLocation={location}
         offers={allOffers[0].offers}
       />

@@ -5,8 +5,6 @@ import renderer from 'react-test-renderer';
 import {BrowserRouter} from 'react-router-dom';
 
 import reducer from '../../reducer/combine-reducer';
-import {allOffers} from '../../test-mocks/all-offers';
-import {location} from '../../test-mocks/location';
 import Main from './main';
 
 const store = createStore(reducer);
@@ -16,10 +14,7 @@ it(`Should render Main correctly`, () => {
     .create((
       <Provider store={store}>
         <BrowserRouter>
-          <Main
-            currentLocation={location}
-            offers={allOffers[0].offers}
-          />
+          <Main />
         </BrowserRouter>
       </Provider>
     )).toJSON();

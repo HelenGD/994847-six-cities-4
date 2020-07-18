@@ -1,4 +1,4 @@
-export const RENTAL_OFFERS = [
+export const RentalOffers = [
   {
     id: 1,
     location: {

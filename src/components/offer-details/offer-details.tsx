@@ -2,6 +2,7 @@ import * as React from 'react';
 import {connect} from "react-redux";
 import {withRouter, Redirect} from 'react-router-dom';
 import {Link} from 'react-router-dom';
+import {createSelector} from 'reselect';
 
 import {ActionCreator} from '../../reducer/reviews';
 import {ActionCreator as DataActionCreator} from '../../reducer/data';
@@ -175,7 +176,8 @@ class OfferDetails extends React.PureComponent<Props> {
             </div>
             <section className="property__map map" style={{display: `flex`}}>
               <Map
-                activeOffer={offer.id}
+                offers={offers}
+                activeOffer={offer}
               />
             </section>
           </section>
@@ -195,20 +197,28 @@ class OfferDetails extends React.PureComponent<Props> {
   }
 }
 
+const offersSelector = createSelector(
+    [
+      ({state}) => state.data.allOffers,
+      ({offerId, state}) => state.data.allOffers
+      .find(({id}) => id === offerId),
+      ({state}) => state.data.currentLocation.city,
+    ],
+    (allOffers, offer, currentLocation) => allOffers
+  .filter(({location, id}) => offer
+    ? location.city === offer.location.city && offer.id !== id
+    : location.city === currentLocation.city
+  )
+  .slice(0, MAX_OFFERS_NEARBY_COUNT),
+);
+
 const mapStateToProps = (state, {match}) => {
   const offerId = Number(match.params.id);
   const offer = state.data.allOffers
     .find(({id}) => id === offerId);
 
-  const offers = state.data.allOffers
-    .filter(({location}) => offer
-      ? location.city === offer.location.city
-      : location.city === state.data.currentLocation.city
-    )
-    .slice(0, MAX_OFFERS_NEARBY_COUNT);
-
   return {
-    offers,
+    offers: offersSelector({state, offerId}),
     offer,
     authorizationStatus: state.user.authorizationStatus,
   };

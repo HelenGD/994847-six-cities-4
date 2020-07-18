@@ -5,7 +5,7 @@ import renderer from 'react-test-renderer';
 import {BrowserRouter} from 'react-router-dom';
 
 import reducer from '../../reducer/combine-reducer';
-import {REVIEWS} from '../../test-mocks/reviews';
+import {Reviews} from '../../test-mocks/reviews';
 import {ReviewsList} from './reviews-list';
 
 const store = createStore(reducer);
@@ -14,7 +14,7 @@ it(`Should render ReviewsList correctly`, () => {
   const tree = renderer.create((
     <Provider store={store}>
       <BrowserRouter>
-        <ReviewsList reviews={REVIEWS} authorizationStatus={`AUTH`} />
+        <ReviewsList reviews={Reviews} authorizationStatus={`AUTH`} />
       </BrowserRouter>
     </Provider>
   )).toJSON();

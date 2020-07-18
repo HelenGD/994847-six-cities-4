@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import {Review} from '../../types/review';
-import {formatDate} from '../../utils';
+import {formatDate, convertRatingToPercent} from '../../utils';
 
 interface Props {
   review: Review;
@@ -22,7 +22,7 @@ const ReviewCard: React.FC<Props> = ({review}) => {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: rating}}></span>
+            <span style={{width: convertRatingToPercent(rating)}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

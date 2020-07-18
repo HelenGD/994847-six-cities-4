@@ -54,7 +54,7 @@ exports[`Should render ReviewsList correctly 1`] = `
             <span
               style={
                 Object {
-                  "width": 2,
+                  "width": "40%",
                 }
               }
             />
@@ -113,7 +113,7 @@ exports[`Should render ReviewsList correctly 1`] = `
             <span
               style={
                 Object {
-                  "width": 3,
+                  "width": "60%",
                 }
               }
             />
@@ -172,7 +172,7 @@ exports[`Should render ReviewsList correctly 1`] = `
             <span
               style={
                 Object {
-                  "width": 5,
+                  "width": "100%",
                 }
               }
             />

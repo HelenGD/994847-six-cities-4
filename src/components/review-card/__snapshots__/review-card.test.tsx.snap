@@ -36,7 +36,7 @@ exports[`Should render RentalCard correctly 1`] = `
         <span
           style={
             Object {
-              "width": 3,
+              "width": "60%",
             }
           }
         />

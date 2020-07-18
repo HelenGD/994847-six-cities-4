@@ -58,7 +58,7 @@ const Main: React.FC<Props> = (props) => {
                   <OffersList offers={offers} />
                 </section>
                 <div className="cities__right-section">
-                  <Map />
+                  <Map offers={offers} />
                 </div>
               </div>
             )

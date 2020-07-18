@@ -1,13 +1,12 @@
 import * as React from 'react';
 import * as leaflet from 'leaflet';
 import {connect} from "react-redux";
-import {createSelector} from 'reselect';
 
 import {Offer, OfferLocation} from '../../types/offer';
-import {getOffersByCity} from '../../utils';
 
 interface Props {
-  activeOffer: number;
+  hoverOffer: number | null;
+  activeOffer?: Offer;
   currentLocation: OfferLocation;
   offers: Offer[];
 }
@@ -40,7 +39,7 @@ class Map extends React.PureComponent<Props> {
       this._map.remove();
     }
 
-    const {offers, activeOffer, currentLocation} = this.props;
+    const {offers, activeOffer, currentLocation, hoverOffer} = this.props;
     const zoom = 12;
 
     const icon = leaflet.icon({
@@ -67,10 +66,20 @@ class Map extends React.PureComponent<Props> {
         })
         .addTo(this._map);
 
+    if (activeOffer) {
+      leaflet
+        .marker(activeOffer.coordinates, {
+          icon: !hoverOffer || activeOffer.id === hoverOffer
+            ? iconActive
+            : icon
+        })
+        .addTo(this._map);
+    }
+
     offers.forEach((offer) => {
       leaflet
         .marker(offer.coordinates, {
-          icon: offer.id === activeOffer
+          icon: offer.id === hoverOffer
             ? iconActive
             : icon
         })
@@ -88,36 +97,10 @@ class Map extends React.PureComponent<Props> {
   }
 }
 
-const offersSelector = createSelector(
-    [
-      ({data}) => data.allOffers,
-      ({data}) => data.currentLocation.city,
-    ],
-    getOffersByCity,
-);
-
-// const detailsOffersSelector = createSelector(
-//   [
-//     ({data}) => data.allOffers,
-//     ({data}) => data.currentLocation.city,
-//     ({data}, activeOffer) => activeOffer
-//   ],
-//   (allOffers, city, activeOffer) => getOffersByCity(allOffers, city),
-// );
-
 const mapStateToProps = (state) => ({
   currentLocation: state.data.currentLocation,
-  offers: offersSelector(state),
-  activeOffer: state.ui.activeOfferLocation,
+  hoverOffer: state.ui.activeOfferLocation,
 });
 
 export {Map};
-export default connect<any, any, any>(
-    mapStateToProps,
-    null,
-    (stateProps, dispatchProps, ownProps) => Object.assign({}, stateProps, dispatchProps, {
-      activeOffer: stateProps.activeOffer === null
-        ? ownProps.activeOffer
-        : stateProps.activeOffer
-    })
-)(Map);
+export default connect(mapStateToProps)(Map);

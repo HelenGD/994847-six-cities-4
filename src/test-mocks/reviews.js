@@ -1,4 +1,4 @@
-export const REVIEWS = [
+export const Reviews = [
   {
     id: 0,
     name: `Michael`,
