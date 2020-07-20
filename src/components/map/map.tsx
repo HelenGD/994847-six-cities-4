@@ -14,20 +14,66 @@ interface Props {
 class Map extends React.PureComponent<Props> {
   ref: React.RefObject<HTMLElement>;
   _map: any;
+  _mapMarkers: any[];
 
   constructor(props) {
     super(props);
 
     this.ref = React.createRef<HTMLElement>();
     this._map = null;
+    this._mapMarkers = [];
   }
 
-  componentDidUpdate() {
-    this._renderMap();
+  componentDidUpdate(prevProps) {
+    if (prevProps.currentLocation !== this.props.currentLocation) {
+      this._renderMap();
+    } else {
+      this._renderMarkers();
+    }
   }
 
   componentDidMount() {
     this._renderMap();
+  }
+
+  _renderMarkers() {
+    this._mapMarkers.forEach((marker) => {
+      this._map.removeLayer(marker);
+    });
+    this._mapMarkers = [];
+
+    const {offers, activeOffer, hoverOffer} = this.props;
+
+    const icon = leaflet.icon({
+      iconUrl: `/img/pin.svg`,
+      iconSize: [30, 30]
+    });
+    const iconActive = leaflet.icon({
+      iconUrl: `/img/pin-active.svg`,
+      iconSize: [30, 30]
+    });
+
+    if (activeOffer) {
+      leaflet
+        .marker(activeOffer.coordinates, {
+          icon: !hoverOffer || activeOffer.id === hoverOffer
+            ? iconActive
+            : icon
+        })
+        .addTo(this._map);
+    }
+
+    offers.forEach((offer) => {
+      const marker = leaflet
+        .marker(offer.coordinates, {
+          icon: offer.id === hoverOffer
+            ? iconActive
+            : icon
+        })
+        .addTo(this._map);
+
+      this._mapMarkers.push(marker);
+    });
   }
 
   _renderMap() {
@@ -39,7 +85,7 @@ class Map extends React.PureComponent<Props> {
       this._map.remove();
     }
 
-    const {offers, activeOffer, currentLocation, hoverOffer} = this.props;
+    const {currentLocation} = this.props;
     const zoom = 12;
 
     const icon = leaflet.icon({
@@ -66,25 +112,7 @@ class Map extends React.PureComponent<Props> {
         })
         .addTo(this._map);
 
-    if (activeOffer) {
-      leaflet
-        .marker(activeOffer.coordinates, {
-          icon: !hoverOffer || activeOffer.id === hoverOffer
-            ? iconActive
-            : icon
-        })
-        .addTo(this._map);
-    }
-
-    offers.forEach((offer) => {
-      leaflet
-        .marker(offer.coordinates, {
-          icon: offer.id === hoverOffer
-            ? iconActive
-            : icon
-        })
-        .addTo(this._map);
-    });
+    this._renderMarkers();
   }
 
   render() {

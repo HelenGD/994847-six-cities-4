@@ -2,7 +2,7 @@ import * as React from 'react';
 import {connect} from "react-redux";
 import {Link} from 'react-router-dom';
 
-import {ActionCreator as DataActionCreator} from '../../reducer/data';
+import {ActionCreator as DataActionCreator} from '../../reducer/data/data';
 import {ActionCreator} from '../../reducer/favorites/favorites';
 import {Offer, OfferLocation} from '../../types/offer';
 import {convertRatingToPercent} from '../../utils';
@@ -32,9 +32,11 @@ class Favorites extends React.PureComponent<Props> {
           <div className="container">
             <div className="header__wrapper">
               <div className="header__left">
-                <a className="header__logo-link" href="main.html">
-                  <img className="header__logo" src="/img/logo.svg" alt="6 cities logo" width="81" height="41" />
-                </a>
+                <Link to="/">
+                  <a className="header__logo-link" href="main.html">
+                    <img className="header__logo" src="/img/logo.svg" alt="6 cities logo" width="81" height="41" />
+                  </a>
+                </Link>
               </div>
               <Auth />
             </div>
@@ -62,7 +64,7 @@ class Favorites extends React.PureComponent<Props> {
                       {offer.offers.map((cityOffer) => (
                         <article key={cityOffer.id}className="favorites__card place-card">
                           <div className="favorites__image-wrapper place-card__image-wrapper">
-                            <Link to={{pathname: `/offer-details/${cityOffer.id}`}}>
+                            <Link to={{pathname: `/offer/${cityOffer.id}`}}>
                               <img className="place-card__image" src={cityOffer.img} width="150" height="110" alt="Place image" />
                             </Link>
                           </div>
@@ -86,7 +88,7 @@ class Favorites extends React.PureComponent<Props> {
                               </div>
                             </div>
                             <h2 className="place-card__name">
-                              <Link to={{pathname: `/offer-details/${cityOffer.id}`}}>
+                              <Link to={{pathname: `/offer/${cityOffer.id}`}}>
                                 {cityOffer.name}
                               </Link>
                             </h2>

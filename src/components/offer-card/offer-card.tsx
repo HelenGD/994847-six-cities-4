@@ -83,7 +83,7 @@ const OfferCard: React.FC<Props> = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={{pathname: `/offer-details/${id}`}}>
+          <Link to={{pathname: `/offer/${id}`}}>
             {name}
           </Link>
         </h2>

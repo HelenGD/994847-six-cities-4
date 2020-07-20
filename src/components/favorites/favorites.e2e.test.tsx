@@ -31,7 +31,7 @@ it(`Should all the headers be clicked`, () => {
 
   citiesListShallow
     .find(Link)
-    .at(0)
+    .at(1)
     .simulate(`click`);
 
   expect(onRemove.mock.calls.length).toBe(1);

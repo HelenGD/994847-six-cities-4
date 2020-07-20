@@ -2,7 +2,7 @@ import * as React from 'react';
 import {connect} from "react-redux";
 import {withRouter} from 'react-router-dom';
 
-import {ActionCreator} from '../../reducer/reviews';
+import {ActionCreator} from '../../reducer/reviews/reviews';
 import {isValidReview} from '../../utils';
 
 const ratingFields = [

@@ -1,6 +1,7 @@
 import React from 'react';
 import Enzyme, {mount} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import {BrowserRouter} from 'react-router-dom';
 
 import {SignIn} from './sign-in';
 
@@ -13,10 +14,12 @@ it(`Should submit form`, () => {
   const onChange = jest.fn();
 
   const signInShallow = mount(
-      <SignIn
-        onSubmit={onSubmit}
-        onChange={onChange}
-      />
+      <BrowserRouter>
+        <SignIn
+          onSubmit={onSubmit}
+          onChange={onChange}
+        />
+      </BrowserRouter>
   );
   signInShallow
     .find(`input[name="email"]`)

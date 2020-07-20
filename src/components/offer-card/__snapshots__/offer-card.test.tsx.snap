@@ -94,7 +94,7 @@ exports[`Should render RentalCard correctly 1`] = `
       className="place-card__name"
     >
       <a
-        href="/offer-details/0"
+        href="/offer/0"
         onClick={[Function]}
       >
         Beautiful & luxurious apartment at great location

@@ -1,6 +1,6 @@
 import {isValidReview} from "../../utils";
 import {createReview, fetchComments} from "../../api";
-import {ActionCreator as DataActionCreator} from "../data";
+import {ActionCreator as DataActionCreator} from "../data/data";
 
 const initialState = {
   newReview: {

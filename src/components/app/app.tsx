@@ -19,7 +19,7 @@ const App: React.FC<Props> = (props) => {
         <Route exact path="/">
           <Main />
         </Route>
-        <Route exact path="/offer-details/:id">
+        <Route exact path="/offer/:id">
           <OfferDetails />
         </Route>
         <Route exact path="/sign-in">
